@@ -73,5 +73,10 @@ namespace ComplexAlgebra
                    Real == complex.Real &&
                    Imaginary == complex.Imaginary;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Real, Imaginary, Modulus, Phase);
+        }
     }
 }
