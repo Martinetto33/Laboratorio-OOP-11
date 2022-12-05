@@ -17,6 +17,12 @@ namespace ComplexAlgebra
     /// TODO:     - e.g. via the Equals(object) method
     public class Complex
     {
-        // TODO: fill this class\
+        public double RealPart { get; set; }
+        public double ImaginaryPart { get; set; }
+
+        public Complex(double real, double imaginary) 
+        {
+            RealPart = real;
+        }
     }
 }

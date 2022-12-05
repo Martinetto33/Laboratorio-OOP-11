@@ -9,55 +9,56 @@ namespace Properties
     /// </summary>
     public class DeckFactory
     {
-        private string[] seeds;
+        /*Usiamo dei campi d'appoggio speciali privati per le proprietà che non usano getter e setter predefiniti.
+        
+        Come descritto nelle slide, le proprietà non vanno viste come campi bensì come piccole classi che contengono
+        un solo campo, un getter e un setter. Tuttavia i nomi delle proprietà sono preceduti dal tipo del campo interno,
+        es: string[] Seeds vuol dire che la proprietà Seeds contiene un campo di tipo string[]
 
-        private string[] names;
-
-        // TODO improve
-        public IList<string> GetSeeds()
+        Usiamo i campi privati (in questo caso) perché vogliamo manipolare l'input passato alle proprietà, ossia
+        non usaimo get e set implementati di default. In tal caso sono comodi i campi privati perché li si può
+        manipolare a piacimento.
+        */
+        private IList<string> _seeds;
+        private IList<string> _names;
+        public string[] Seeds 
         {
-            return this.seeds.ToList();
+            get => _seeds.ToArray();
+            set
+            {
+                _seeds = value;
+            }
         }
-
-        // TODO improve
-        public void SetSeeds(IList<string> seeds)
+        public string[] Names 
         {
-            this.seeds = seeds.ToArray();
-        }
-
-        // TODO improve
-        public IList<string> GetNames()
-        {
-            return this.names.ToList();
-        }
-
-        // TODO improve
-        public void SetNames(IList<string> names)
-        {
-            this.names = names.ToArray();
+            get => _names.ToArray();
+            set
+            {
+                _names = value;
+            }
         }
 
         // TODO improve
         public int GetDeckSize()
         {
-            return this.names.Length * this.seeds.Length;
+            return Names.Length * Seeds.Length;
         }
 
         /// TODO improve
         public ISet<Card> GetDeck()
         {
-            if (this.names == null || this.seeds == null)
+            if (Names == null || Seeds == null)
             {
                 throw new InvalidOperationException();
             }
 
             return new HashSet<Card>(Enumerable
-                .Range(0, this.names.Length)
+                .Range(0, Names.Length)
                 .SelectMany(i => Enumerable
-                    .Repeat(i, this.seeds.Length)
+                    .Repeat(i, Seeds.Length)
                     .Zip(
-                        Enumerable.Range(0, this.seeds.Length),
-                        (n, s) => Tuple.Create(this.names[n], this.seeds[s], n)))
+                        Enumerable.Range(0, Seeds.Length),
+                        (n, s) => Tuple.Create(Names[n], Seeds[s], n)))
                 .Select(tuple => new Card(tuple))
                 .ToList());
         }
