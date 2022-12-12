@@ -27,6 +27,14 @@ namespace Calculus
         public const char OperationPlus = '+';
         public const char OperationMinus = '-';
 
+        public Complex Value {get; set;}
+        public char? Operation {get; set;} //can be null
+
         // TODO fill this class
+        public override string ToString()
+        {
+            return null;
+        }
+
     }
 }
